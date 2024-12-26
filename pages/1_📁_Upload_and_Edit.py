@@ -28,11 +28,15 @@ def main():
     
     if uploaded_file:
         try:
-            # 自動判斷 CSV 或 Excel 進行讀取
-            if uploaded_file.name.endswith(".csv"):
+            # 如果是字串代表是範例檔案路徑，用 pandas.read_csv() 讀取
+            if isinstance(uploaded_file, str):
                 df = pd.read_csv(uploaded_file)
             else:
-                df = pd.read_excel(uploaded_file)
+                # user_file 的情況 -> 要判斷副檔名
+                if uploaded_file.name.endswith(".csv"):
+                    df = pd.read_csv(uploaded_file)
+                else:
+                    df = pd.read_excel(uploaded_file)
 
             st.write("檔案成功上傳！以下是資料內容：")
             st.write(df)
