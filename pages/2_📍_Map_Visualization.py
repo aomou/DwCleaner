@@ -53,7 +53,8 @@ def main():
 
         if sum(not_decimal) != 0:   
             # print invalid coords
-            col1.write('Invalid coords:', df[['decimalLatitude', 'decimalLongitude']][not_decimal]) 
+            col1.write('Invalid coords:')
+            col1.write(df[['decimalLatitude', 'decimalLongitude']][not_decimal]) 
 
             # subset invalid coords (copy) & generate edited version: `new_df`
             df_not_decimal = df[['decimalLatitude', 'decimalLongitude']][not_decimal].copy()
@@ -63,7 +64,8 @@ def main():
                 p_coords = Point(coords)
                 new_df.loc[i, ['decimalLatitude', 'decimalLongitude']] = p_coords.latitude, p_coords.longitude
 
-            col2.write('Corrected coords:', new_df[['decimalLatitude', 'decimalLongitude']][not_decimal])
+            col2.write('Corrected coords:')
+            col2.write(new_df[['decimalLatitude', 'decimalLongitude']][not_decimal])
 
         else:
             st.write('All coordinates are decimal!')
