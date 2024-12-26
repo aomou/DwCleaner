@@ -11,7 +11,21 @@ def main():
     if "df" not in st.session_state:
         st.session_state.df = None
 
-    uploaded_file = st.file_uploader("請上傳您的 Excel 或 CSV 檔案", type=["xlsx", "xls", "csv"])
+    # 使用者可以上傳檔案
+    user_file = st.file_uploader("請上傳您的 Excel 或 CSV 檔案", type=["xlsx", "xls", "csv"])
+
+    # 提供範例檔案選項（checkbox 或者 radio / selectbox 皆可）
+    use_sample = st.checkbox("使用範例檔案 (data/1_jellyfish_originalData.csv)")
+
+    # 用一個變數來代表真正要處理的 uploaded_file
+    uploaded_file = None
+
+    # 決定最終的 uploaded_file
+    if use_sample:
+        uploaded_file = "data/1_jellyfish_originalData.csv"
+    elif user_file is not None:
+        uploaded_file = user_file
+    
     if uploaded_file:
         try:
             # 自動判斷 CSV 或 Excel 進行讀取
