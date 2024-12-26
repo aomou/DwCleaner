@@ -22,7 +22,7 @@ def main():
 
     # 決定最終的 uploaded_file
     if use_sample:
-        uploaded_file = "data/1_jellyfish_originalData.csv"
+        uploaded_file = "../data/1_jellyfish_originalData.csv"
     elif user_file is not None:
         uploaded_file = user_file
     
