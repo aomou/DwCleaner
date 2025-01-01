@@ -72,18 +72,13 @@ def main():
 
         #### Map ----
 
-        # Streamlit base map ----
-        st.subheader('Simple map')
-
         # make sure coords is numeric
         new_df = new_df.astype({'decimalLatitude': 'float', 'decimalLongitude': 'float', 'individualCount': 'int'})
         # replace NaN
         new_df['vernacularName'] = new_df['vernacularName'].fillna("")
 
-        st.map(new_df, latitude='decimalLatitude', longitude='decimalLongitude') 
-
         # PyDeck map ----
-        st.subheader('PyDeck map')
+        st.subheader('Map')
 
         # calculate best zoom
         # 1. 從 new_df 找出經緯度的 min / max
@@ -140,7 +135,7 @@ def main():
         )
 
         ## Display map through Streamlit ----
-        st.write('Size: individualCount 點的大小代表個體數')
+        #st.write('Size: individualCount 點的大小代表個體數')
         st.pydeck_chart(pdk.Deck(
             layers = [layer],
             initial_view_state = view_state,
