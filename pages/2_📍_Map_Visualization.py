@@ -150,9 +150,9 @@ def main():
     # 更新後，如有需要再同步回 session_state
     st.session_state.df = new_df
 
-    # 提示下一步
-    if st.button("下一頁 →"):
-        st.info("請點選左側的『3_📥_Download_File』下載處理後的檔案。")
+    # 下一頁
+    if st.session_state.df is not None:
+        st.info("請點選左側的「5_📥_Download_File」下載處理後的檔案。")
 
 if __name__ == "__main__":
     main()
