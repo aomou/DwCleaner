@@ -30,7 +30,7 @@ def main():
     use_sample = st.checkbox("使用範例檔案 (data/1_jellyfish_originalData.csv)")
     
     # 上傳檔案
-    uploaded_file = st.file_uploader("請上傳您的 Excel 或 CSV 檔案", type=["xlsx", "xls", "csv"])
+    user_file = st.file_uploader("請上傳您的 Excel 或 CSV 檔案", type=["xlsx", "xls", "csv"])
 
     # 用一個變數來代表真正要處理的 uploaded_file
     uploaded_file = None
