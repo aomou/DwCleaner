@@ -17,17 +17,17 @@ def main():
     st.write(" 目前的資料：")
     st.dataframe(df)
     
-# 提取年份及月份
-def extract_year(eventDate):
-    for fmt in ('%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d'):
-        try:
-            date_obj = datetime.strptime(str(eventDate), fmt)
-            # 返回標準化的日期格式 (%Y-%m-%d)
-            standardized_date = date_obj.strftime('%Y-%m-%d')
-            return date_obj.year
-        except ValueError:
-            continue
-    return None
+  # 提取年份及月份
+  def extract_year(eventDate):
+      for fmt in ('%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d'):
+          try:
+              date_obj = datetime.strptime(str(eventDate), fmt)
+              # 返回標準化的日期格式 (%Y-%m-%d)
+              standardized_date = date_obj.strftime('%Y-%m-%d')
+              return date_obj.year
+          except ValueError:
+              continue
+      return None
 
 
 
