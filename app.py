@@ -7,7 +7,7 @@ from geopy import Point  # 轉換座標
 import pydeck as pdk     # 畫地圖
 import plotly.express as px # 畫長條圖
 from datetime import datetime # 檢查日期
-from fuzzywuzzy import fuzz # 檢查重複度
+
 
 def main():
     st.title("我的多分頁 Streamlit App")
