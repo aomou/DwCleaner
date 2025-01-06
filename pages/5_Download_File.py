@@ -1,3 +1,5 @@
+import streamlit as st
+
 def main():
  # 檢查是否有上傳的資料
     if "df" not in st.session_state or st.session_state.df is None:
