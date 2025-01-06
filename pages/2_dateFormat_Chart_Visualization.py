@@ -18,7 +18,7 @@ def main():
     st.dataframe(df)
     
   # 提取年份及月份
-  def extract_year(eventDate):
+    def extract_year(eventDate):
       for fmt in ('%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d'):
           try:
               date_obj = datetime.strptime(str(eventDate), fmt)
@@ -109,7 +109,7 @@ def main():
 
       
   # 最終資料存進 Session State
-  st.session_state.df = df
+    st.session_state.df = df
   
 if __name__ == "__main__":
     main()
