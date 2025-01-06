@@ -1,1 +1,2 @@
-st.write("測試")
+def main():
+  st.write("測試")
