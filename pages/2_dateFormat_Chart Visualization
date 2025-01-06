@@ -4,7 +4,6 @@ import plotly.express as px
 from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
-from fuzzywuzzy import fuzz
 
 def main():
   st.title("圖表可視化")
