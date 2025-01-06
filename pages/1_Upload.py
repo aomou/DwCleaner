@@ -36,7 +36,7 @@ def main():
     uploaded_file = None
     
     # 決定最終使用的檔案
-     if use_sample:
+    if use_sample:
         uploaded_file = "data/1_jellyfish_originalData.csv"
     elif user_file is not None:
         uploaded_file = user_file
