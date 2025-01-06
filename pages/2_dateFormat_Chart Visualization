@@ -6,7 +6,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 from fuzzywuzzy import fuzz
 
+def main():
+  st.title("圖表可視化")
+    # 確認第一頁有上傳並處理過資料
+    if "df" not in st.session_state or st.session_state.df is None:
+        st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload_and_Edit』頁面。")
+        return
 
+    df = st.dataframe(df)
+
+    st.write(" 目前的資料：")
+    st.dataframe(df)
+    
 # 提取年份及月份
 def extract_year(eventDate):
     for fmt in ('%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d'):
@@ -97,3 +108,9 @@ def extract_year(eventDate):
         st.write("數據表:")
         st.dataframe(yearly_counts)
 
+      
+  # 最終資料存進 Session State
+  st.session_state.df = df
+  
+if __name__ == "__main__":
+    main()
