@@ -13,7 +13,8 @@ def main():
         "individualCount",
         "locality"
     ]
-
+    df = None  # 初始化 df
+    
     # 初始化 session_state
     if "df" not in st.session_state:
         st.session_state.df = None
@@ -33,22 +34,32 @@ def main():
     user_file = st.file_uploader("請上傳您的 Excel 或 CSV 檔案", type=["xlsx", "xls", "csv"])
 
     # 用一個變數來代表真正要處理的 uploaded_file
-    uploaded_file = None
+    uploaded_file = "data/1_jellyfish_originalData.csv" if use_sample else user_file
     
     # 決定最終使用的檔案
     if use_sample:
         uploaded_file = "data/1_jellyfish_originalData.csv"
     elif user_file is not None:
         uploaded_file = user_file
-        
+    
     if uploaded_file:
         try:
-            if uploaded_file.name.endswith(".csv"):
+            if isinstance(uploaded_file, str) and uploaded_file.endswith(".csv"):
                 df = pd.read_csv(uploaded_file)
-            else:
+            elif not isinstance(uploaded_file, str):
                 df = pd.read_excel(uploaded_file)
+                
+    if st.session_state is None:
+        st.error("尚未上傳任何有效檔案，請檢查後再試。")
+        return
+    # if uploaded_file:
+    #     try:
+    #         if uploaded_file.name.endswith(".csv"):
+    #             df = pd.read_csv(uploaded_file)
+    #         else:
+    #             df = pd.read_excel(uploaded_file)
 
-            st.write("檔案成功上傳！以下是資料內容：")
+            st.success("檔案成功上傳！以下是資料內容：")
             st.dataframe(df)
 
             st.session_state.df = df
@@ -174,7 +185,8 @@ def main():
                 st.dataframe(df)
             
     # 最終資料存進 Session State
-    st.session_state.df = df
+    if st.session_state.updated_df is not None:
+        st.session_state.df = st.session_state.updated_df
 
 if __name__ == "__main__":
     main()
