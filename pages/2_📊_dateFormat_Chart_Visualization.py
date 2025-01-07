@@ -41,12 +41,13 @@ def main():
     # 確保 DataFrame 包含 eventDate 欄位
     if 'eventDate' in df.columns:
         df['year']= df['eventDate'].apply(extract_year)
-        st.success("處理完成！")    
+        st.success("eventDate處理完成！")    
     elif 'year' in df.columns:
         # 確保 year欄位存在後再進行操作(非空值均轉為字串)
         df['year']= df['year'].apply(lambda x: str(x) if pd.notna(x) else x)
-        st.write(df)
-        st.success("處理完成！")
+        st.session_state.df = df
+        #st.write(df)
+        st.success("year處理完成！")
     else:
         st.error("無法取得年份資料，請回到『1_📁_Upload』增加年欄位!")
         error = True
@@ -63,7 +64,9 @@ def main():
 
         # 計算每個年份的出現次數
         yearly_counts = df['year'].value_counts().sort_index()
-
+        st.write("計算年份出現次數!!!")
+        st.write(yearly_counts)
+        
         if not yearly_counts.empty:
             # 建立長條圖
             st.title("Event Yearly Data Visualization")
