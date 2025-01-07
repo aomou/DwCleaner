@@ -175,7 +175,11 @@ def main():
     #             st.session_state.updated_df = df  # 保存最終更新的表單
     #             st.success("新增欄位完成！以下為更新後的資料：")
     #             st.dataframe(df)
-            
+
+    # 移除 [year] 欄位的千分號，並轉為整數
+    st.session_state.updated_df['year'] = st.session_state.updated_df['year'].str.replace(',', '').astype(int)
+
+    
     # 最終資料存進 Session State
     if st.session_state.updated_df is not None:
         st.session_state.df = st.session_state.updated_df
