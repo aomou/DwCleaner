@@ -36,17 +36,16 @@ def main():
         df['year']= df['eventDate'].apply(extract_year)
         st.success("處理完成！")    
     else:
-         # 處理沒有eventDate的資料
-        st.warning("缺少年欄位，無法建立 eventDate欄位，請回到1_Upload增加年欄位!")         
-        error = True       
+        # 確保 year欄位存在後再進行操作(非空值均轉為字串)
+        if 'year' in df.columns:
+            df['year']= df['eventDate'].apply(lambda x: str(x) if pd.notna(x) else x)
+            st.write(df)
+            st.success("處理完成！")
+        else:
+            st.error("無法取得年份資料，請回到『1_Upload』增加年欄位!")
+            error = True     
                 
-    # 確保 year欄位存在後再進行操作(非空值均轉為字串)
-    if 'year' in df.columns:
-        df['year']= df['eventDate'].apply(lambda x: str(x) if pd.notna(x) else x)
-        st.write(df)
-    else:
-        st.error("無法取得年份資料，請回到『1_Upload』增加年欄位!")
-        error = True
+    
         
 
     if not error:
