@@ -41,13 +41,25 @@ def main():
 
     # 確保 DataFrame 包含 eventDate 欄位
     if 'eventDate' in df.columns:
+        # 1. 先將 eventDate 欄位轉換為字串
+        df['eventDate'] = df['eventDate'].astype(str)
+    
+        # 2. 移除逗號
+        df['eventDate'] = df['eventDate'].str.replace(',', '')
+    
+        # 3. 轉換為數值類型
+        df['eventDate'] = pd.to_numeric(df['eventDate'], errors='coerce')
+        
+        # 4. 更新 session state 中的資料框
+        st.session_state.df = df
+
         # df['year']= df['eventDate'].apply(extract_year)
         st.success("『eventDate』欄位處理完成！")
         
-        # 更新df(移除年份欄位的千分位符號)
-        df['eventDate']= pd.to_numeric(df['eventDate'],errors='coerce')
-        st.session_state.df = df 
-        st.write(df)
+        # # 更新df(移除年份欄位的千分位符號)
+        # df['eventDate']= pd.to_numeric(df['eventDate'],errors='coerce')
+        # st.session_state.df = df 
+        # st.write(df)
     # elif 'year' in df.columns:
     #     # 確保 year欄位存在後再進行操作(非空值均轉為字串)
     #     df['year']= df['year'].apply(lambda x: str(x) if pd.notna(x) else x)
