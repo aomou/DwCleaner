@@ -1,6 +1,5 @@
 def main():
-  st.write("測試")
-  # 確認第一頁有上傳並處理過資料
+    # 確認第一頁有上傳並處理過資料
     if "df" not in st.session_state or st.session_state.df is None:
         st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload_and_Edit』頁面。")
         return
@@ -15,10 +14,11 @@ def main():
         if pd.notna(scientific_name):
             return scientific_name.strip().title()
         return scientific_name
-
+    st.write(df)
+    
     # 如果有資料，可以顯示「下一頁」按鈕
     if st.session_state.df is not None:
-        st.info("請點選左側的『2_📍_Map_Visualization』進行地圖檢查或修正。")
+        st.info("請點選左側的『4_📍_Map_Visualization』進行地圖檢查或修正。")
 
 if __name__ == "__main__":
     main()
