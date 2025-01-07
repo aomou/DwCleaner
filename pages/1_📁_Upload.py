@@ -47,6 +47,13 @@ def main():
         if uploaded_file:
             if  uploaded_file.endswith(".csv"):
                 df = pd.read_csv(uploaded_file)
+                df['year']= (
+                    df['year']
+                    .fillna('0')
+                    .astype(str)
+                    .str.replace(',','',regex=False)
+                    .astype(int)
+                )
             else:
                 df = pd.read_excel(uploaded_file)
             st.write("檔案成功上傳！以下是資料內容：")
@@ -175,9 +182,6 @@ def main():
     #             st.session_state.updated_df = df  # 保存最終更新的表單
     #             st.success("新增欄位完成！以下為更新後的資料：")
     #             st.dataframe(df)
-
-    # 移除 [year] 欄位的千分號，並轉為整數
-    st.session_state.updated_df['year'] = st.session_state.updated_df['year'].astype(str).str.replace(',', '').astype(int)
 
     
     # 最終資料存進 Session State
