@@ -47,6 +47,8 @@ def main():
         if uploaded_file:
             if  uploaded_file.endswith(".csv"):
                 df = pd.read_csv(uploaded_file, thousands=',')
+                df = df.replace(',','', regex=True)
+    
             else:
                 df = pd.read_excel(uploaded_file)
             st.write("檔案成功上傳！以下是資料內容：")
