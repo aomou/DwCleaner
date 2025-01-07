@@ -177,7 +177,7 @@ def main():
     #             st.dataframe(df)
 
     # 移除 [year] 欄位的千分號，並轉為整數
-    st.session_state.updated_df['year'] = st.session_state.updated_df['year'].str.replace(',', '').astype(int)
+    st.session_state.updated_df['year'] = st.session_state.updated_df['year'].astype(str).str.replace(',', '').astype(int)
 
     
     # 最終資料存進 Session State
