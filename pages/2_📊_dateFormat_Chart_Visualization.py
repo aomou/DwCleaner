@@ -54,13 +54,14 @@ def main():
         return
                 
     
-    if not error and  not df['year'].empty:
+    if not error and not df['year'].empty and not df['eventDate'].empty:
         # 移除無效年份數據
         df['year']= pd.to_numeric(df['year'],errors='coerce')
         
-        # # 確保日期欄位為字串並取出年份
-        # df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
-        # df['year'] = df['eventDate'].dt.year
+        # # 確保日期欄位為字串並取出年份  keyerror
+        if 'eventDate' in df.columns:
+            df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
+            df['year'] = df['eventDate'].dt.year
 
         # 計算每個年份的出現次數
         yearly_counts = df['year'].value_counts().sort_index()
