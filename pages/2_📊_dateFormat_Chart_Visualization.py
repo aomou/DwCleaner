@@ -19,23 +19,23 @@ def main():
     
     st.dataframe(df)
     
-  # # 提取年份及月份
-  #   def extract_year(eventDate):
-  #       if pd.isna(eventDate): 
-  #           return None
-  #       if isinstance(eventDate, (int)):
-  #           return int(eventDate)
+  # 提取年份及月份
+    def extract_year(eventDate):
+        if pd.isna(eventDate): 
+            return None
+        if isinstance(eventDate, (int)):
+            return int(eventDate)
             
-  #           date_formats = ['%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d']
-  #           for fmt in date_formats:
-  #             try:
-  #                 date_obj = datetime.strptime(str(eventDate), fmt)
-  #                 # 返回標準化的日期格式 (%Y-%m-%d)
-  #                 standardized_date = date_obj.strftime('%Y-%m-%d')
-  #                 return date_obj.year
-  #             except ValueError:
-  #                 continue
-  #           return None
+            date_formats = ['%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d']
+            for fmt in date_formats:
+              try:
+                  date_obj = datetime.strptime(str(eventDate), fmt)
+                  # 返回標準化的日期格式 (%Y-%m-%d)
+                  standardized_date = date_obj.strftime('%Y-%m-%d')
+                  return date_obj.year
+              except ValueError:
+                  continue
+            return None
         
 
 
@@ -64,7 +64,8 @@ def main():
         
         #  直接使用數值作為年份 
         if 'eventDate' in df.columns:   
-            df['eventDate'] = pd.to_numeric(df['eventDate'], errors='coerce')
+            df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
+            df['eventDate'] = df['eventDate'].dt.year
             yearly_counts = df['eventDate'].value_counts().sort_index()
             
             # df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
