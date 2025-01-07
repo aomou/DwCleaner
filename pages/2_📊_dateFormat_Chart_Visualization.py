@@ -31,35 +31,23 @@ def main():
       return None
 
 
-
     # 確保 DataFrame 包含 eventDate 欄位
     if 'eventDate' in df.columns:
         df['year']= df['eventDate'].apply(extract_year)
-
+        st.success("處理完成！")    
+    else:
+         # 處理沒有eventDate的資料
+        st.warning("缺少年欄位，無法建立 eventDate欄位，請回到1_Upload增加年欄位!")         
+        error = True       
+                
     # 確保 year欄位存在後再進行操作(非空值均轉為字串)
     if 'year' in df.columns:
         df['year']= df['eventDate'].apply(lambda x: str(x) if pd.notna(x) else x)
         st.write(df)
     else:
-        st.error("無法取得年份資料，請檢查eventDate欄位格式是否正確!")
+        st.error("無法取得年份資料，請回到『1_Upload』增加年欄位!")
         error = True
-
-    # 處理沒有eventDate的資料
-    if df['eventDate'].isnull().any():
-        st.warning("eventDate 欄位有空值，請檢查資料是否完整!")         
-        error = True
-        if 'year' in df.columns and 'month' in df.columns and 'day' in df.columns:
-            if df['year'].isnull().any() or df['month'].isnull().any() or df['day'].isnull().any():
-                st.warning("請確認每筆資料是否有日期欄位且無缺漏值!")         
-                error = True
-
-            elif df['year'].notna().all() and df['month'].notna().all() and df['day'].notna().all():
-                df['eventDate'] = df['year'].astype(str) + '-' + df['month'].astype(str) + '-'+ df['day'].astype(str)
-                df.drop(columns=['year', 'month', 'day'], inplace=True)
-        else:
-             # 如果 year, month, day 欄位缺少任何一個
-            st.warning("缺少年、月或日欄位，無法建立 eventDate，請確保年、月、日欄位不是空值!")
-            error = True
+        
 
     if not error:
         # 確保日期欄位為字串並取出年份
