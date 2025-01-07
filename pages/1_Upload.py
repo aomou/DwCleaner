@@ -32,9 +32,10 @@ def main():
     
     # 上傳檔案
     user_file = st.file_uploader("請上傳您的 Excel 或 CSV 檔案", type=["xlsx", "xls", "csv"])
-
+  
+    
     # 用一個變數來代表真正要處理的 uploaded_file
-    uploaded_file = "data/1_jellyfish_originalData.csv" if use_sample else user_file
+    uploaded_file =None
     
     # 決定最終使用的檔案
     if use_sample:
@@ -44,29 +45,19 @@ def main():
     
     if uploaded_file:
         try:
-            if isinstance(uploaded_file, str) and uploaded_file.endswith(".csv"):
+            if  uploaded_file.endswith(".csv"):
                 df = pd.read_csv(uploaded_file)
-            elif not isinstance(uploaded_file, str):
+            else:
                 df = pd.read_excel(uploaded_file)
-                
-    if st.session_state is None:
-        st.error("尚未上傳任何有效檔案，請檢查後再試。")
-        return
-    # if uploaded_file:
-    #     try:
-    #         if uploaded_file.name.endswith(".csv"):
-    #             df = pd.read_csv(uploaded_file)
-    #         else:
-    #             df = pd.read_excel(uploaded_file)
-
-            st.success("檔案成功上傳！以下是資料內容：")
+            st.write("檔案成功上傳！以下是資料內容：")
             st.dataframe(df)
-
             st.session_state.df = df
             if st.session_state.updated_df is None:
                 st.session_state.updated_df = df.copy()
         except Exception as e:
             st.error(f"上傳或處理檔案時發生錯誤：{e}")
+    else:
+        st.warning("尚未上傳檔案，或未啟用範例檔案")
 
     if st.session_state.df is not None:
         df = st.session_state.updated_df  # 使用已更新的表單
