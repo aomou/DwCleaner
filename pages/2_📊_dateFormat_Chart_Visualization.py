@@ -58,9 +58,9 @@ def main():
         # 移除無效年份數據
         df['year']= pd.to_numeric(df['year'],errors='coerce')
         
-        # 確保日期欄位為字串並取出年份
-        df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
-        df['year'] = df['eventDate'].dt.year
+        # # 確保日期欄位為字串並取出年份
+        # df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
+        # df['year'] = df['eventDate'].dt.year
 
         # 計算每個年份的出現次數
         yearly_counts = df['year'].value_counts().sort_index()
@@ -82,7 +82,7 @@ def main():
                 text=yearly_counts.values  # 在每個柱上顯示數值
             )
             
-            # 移除鼠標的文字顯示
+            # 移除滑鼠的文字顯示
             fig.update_traces(
                 hovertemplate = 'Year=%{x}<br>Number of Records=%{y}<extra></extra>'
             )
@@ -103,9 +103,9 @@ def main():
             # 顯示圖表
             st.plotly_chart(fig)
     
-            # 顯示數據表
-            st.write("數據表:")
-            st.dataframe(yearly_counts)
+            # # 顯示數據表
+            # st.write("數據表:")
+            # st.dataframe(yearly_counts)
 
             # 最終資料存進 Session State
             st.session_state.df = df
