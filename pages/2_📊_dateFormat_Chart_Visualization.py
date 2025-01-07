@@ -15,76 +15,46 @@ def main():
     
 
     df = st.session_state.df
-
     st.write(" 目前的資料：")
-    
     st.dataframe(df)
     
     # 顯示目前的欄位名稱，方便除錯
     st.write("資料框中的欄位名稱：", df.columns.tolist())
+
     
-  # 提取年份及月份
-    def extract_year(eventDate):
-        if pd.isna(eventDate): 
-            return None
-        if isinstance(eventDate, (int)):
-            return int(eventDate)
-            
-            date_formats = ['%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d']
-            for fmt in date_formats:
-              try:
-                  date_obj = datetime.strptime(str(eventDate), fmt)
-                  # 返回標準化的日期格式 (%Y-%m-%d)
-                  standardized_date = date_obj.strftime('%Y-%m-%d')
-                  return date_obj.year
-              except ValueError:
-                  continue
-            return None
-        
-
-
     # 確保 DataFrame 包含 eventDate 欄位
     if 'eventDate' in df.columns:
         # 轉換為字串並移除逗號
-        'year' = df['eventDate'].astype(str).str.replace(',', '')
-        # 轉換為數值
-        df['eventDate'] = pd.to_numeric(df['eventDate'], errors='coerce')
-            
-        # 更新 session state 中的資料框
+        df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
+        # 提取年份
+        df['eventDate'] = df['eventDate'].dt.year
+
+        # 移除無效年份資料（NaN）
+        df = df.dropna(subset=['eventDate'])
+        df['eventDate'] = df['eventDate'].astype(int)  # 確保為整數
+
+        # 計算每年的出現次數
+        yearly_counts = df['eventDate'].value_counts().sort_index()
+
+        # 更新 session state 中的資料
         st.session_state.df = df
         st.write(st.session_state.df)
         st.success("『eventDate』欄位處理完成！")
-        df['year']= df['eventDate'].apply(extract_year)
-        
-        # df['year']= df['year'].apply(lambda x: str(x) if pd.notna(x) else x)
-        
-        
-    # elif 'year' in df.columns:
-    #     # 確保 year欄位存在後再進行操作(非空值均轉為字串)
-    #     df['year']= df['year'].apply(lambda x: str(x) if pd.notna(x) else x)
-    #     st.session_state.df = df
-    #     #st.write(df)
-    #     st.success("year處理完成！")
-    
-    if not df['eventDate'].empty:
-        
-        #  直接使用數值作為年份 
-        if 'eventDate' in df.columns:   
-            df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
-            df['eventDate'] = df['eventDate'].dt.year
-            yearly_counts = df['eventDate'].value_counts().sort_index()
 
-        # 計算每個年份的出現次數
-        yearly_counts = df['eventDate'].value_counts().sort_index()
         st.write("計算年份出現次數!!!")
         st.write(yearly_counts)
-        
+    
+    
+        # 如果 yearly_counts 有資料
         if not yearly_counts.empty:
-            # 建立長條圖
+           
             st.title("Event Yearly Data Visualization")
             st.write("歷年生物出現長條圖:") 
-    
-            # 使用 Plotly 繪製長條圖
+
+            st.write(yearly_counts.index)
+            st.write(yearly_counts.values)
+            
+            # 繪製長條圖
             fig = px.bar(
                 x=yearly_counts.index,
                 y=yearly_counts.values,
@@ -93,7 +63,7 @@ def main():
                 text=yearly_counts.values  # 在每個柱上顯示數值
             )
             
-            # 移除滑鼠的文字顯示
+            # 移除滑鼠文字顯示
             fig.update_traces(
                 hovertemplate = 'Year=%{x}<br>Number of Records=%{y}<extra></extra>'
             )
@@ -121,7 +91,6 @@ def main():
             # 最終資料存進 Session State
             st.session_state.df = df
       
-  
   
 if __name__ == "__main__":
     main()
