@@ -46,14 +46,7 @@ def main():
     try:
         if uploaded_file:
             if  uploaded_file.endswith(".csv"):
-                df = pd.read_csv(uploaded_file)
-                df['year']= (
-                    df['year']
-                    .fillna('0')
-                    .astype(str)
-                    .str.replace(',','',regex=False)
-                    .astype(int)
-                )
+                df = pd.read_csv(uploaded_file, thousands=',')
             else:
                 df = pd.read_excel(uploaded_file)
             st.write("檔案成功上傳！以下是資料內容：")
