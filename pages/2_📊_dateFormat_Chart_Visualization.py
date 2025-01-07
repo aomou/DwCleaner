@@ -12,6 +12,8 @@ def main():
     if "df" not in st.session_state or st.session_state.df is None:
         st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload』頁面。")
         return
+    # 顯示目前的欄位名稱，方便除錯
+    st.write("資料框中的欄位名稱：", df.columns.tolist())
 
     df = st.session_state.df
 
@@ -41,20 +43,16 @@ def main():
 
     # 確保 DataFrame 包含 eventDate 欄位
     if 'eventDate' in df.columns:
-        # 1. 先將 eventDate 欄位轉換為字串
-        df['eventDate'] = df['eventDate'].astype(str)
-    
-        # 2. 移除逗號
-        df['eventDate'] = df['eventDate'].str.replace(',', '')
-    
-        # 3. 轉換為數值類型
+        # 轉換為字串並移除逗號
+        df['eventDate'] = df['eventDate'].astype(str).str.replace(',', '')
+        # 轉換為數值
         df['eventDate'] = pd.to_numeric(df['eventDate'], errors='coerce')
-        
-        # 4. 更新 session state 中的資料框
+            
+        # 更新 session state 中的資料框
         st.session_state.df = df
-
-        # df['year']= df['eventDate'].apply(extract_year)
         st.success("『eventDate』欄位處理完成！")
+        # df['year']= df['eventDate'].apply(extract_year)
+        
         
         # # 更新df(移除年份欄位的千分位符號)
         # df['eventDate']= pd.to_numeric(df['eventDate'],errors='coerce')
