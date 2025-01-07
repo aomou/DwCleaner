@@ -12,14 +12,16 @@ def main():
     if "df" not in st.session_state or st.session_state.df is None:
         st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload』頁面。")
         return
-    # 顯示目前的欄位名稱，方便除錯
-    st.write("資料框中的欄位名稱：", df.columns.tolist())
+    
 
     df = st.session_state.df
 
     st.write(" 目前的資料：")
     
     st.dataframe(df)
+    
+    # 顯示目前的欄位名稱，方便除錯
+    st.write("資料框中的欄位名稱：", df.columns.tolist())
     
   # 提取年份及月份
     def extract_year(eventDate):
