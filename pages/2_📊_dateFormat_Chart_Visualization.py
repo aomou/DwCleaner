@@ -46,31 +46,25 @@ def main():
     # 確保 DataFrame 包含 eventDate 欄位
     if 'eventDate' in df.columns:
         # 轉換為字串並移除逗號
-        df['eventDate'] = df['eventDate'].astype(str).str.replace(',', '')
+        'year' = df['eventDate'].astype(str).str.replace(',', '')
         # 轉換為數值
         df['eventDate'] = pd.to_numeric(df['eventDate'], errors='coerce')
             
         # 更新 session state 中的資料框
         st.session_state.df = df
+        st.write(st.session_state.df)
         st.success("『eventDate』欄位處理完成！")
-        # df['year']= df['eventDate'].apply(extract_year)
+        df['year']= df['eventDate'].apply(extract_year)
+        
+        # df['year']= df['year'].apply(lambda x: str(x) if pd.notna(x) else x)
         
         
-        # # 更新df(移除年份欄位的千分位符號)
-        # df['eventDate']= pd.to_numeric(df['eventDate'],errors='coerce')
-        # st.session_state.df = df 
-        # st.write(df)
     # elif 'year' in df.columns:
     #     # 確保 year欄位存在後再進行操作(非空值均轉為字串)
     #     df['year']= df['year'].apply(lambda x: str(x) if pd.notna(x) else x)
     #     st.session_state.df = df
     #     #st.write(df)
     #     st.success("year處理完成！")
-    # else:
-    #     st.error("無法取得『eventDate』欄位，請回到『1_📁_Upload』確認『eventDate』欄位!")
-    #     error = True
-    #     return
-                
     
     if not df['eventDate'].empty:
         
@@ -79,9 +73,6 @@ def main():
             df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
             df['eventDate'] = df['eventDate'].dt.year
             yearly_counts = df['eventDate'].value_counts().sort_index()
-            
-            # df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
-            # df['year'] = df['eventDate'].dt.year
 
         # 計算每個年份的出現次數
         yearly_counts = df['eventDate'].value_counts().sort_index()
