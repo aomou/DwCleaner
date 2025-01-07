@@ -42,9 +42,9 @@ def main():
         uploaded_file = "data/1_jellyfish_originalData.csv"
     elif user_file is not None:
         uploaded_file = user_file
-    
-    if uploaded_file:
-        try:
+
+    try:
+        if uploaded_file:
             if  uploaded_file.endswith(".csv"):
                 df = pd.read_csv(uploaded_file)
             else:
@@ -54,10 +54,11 @@ def main():
             st.session_state.df = df
             if st.session_state.updated_df is None:
                 st.session_state.updated_df = df.copy()
-        except Exception as e:
-            st.error(f"上傳或處理檔案時發生錯誤：{e}")
-    else:
-        st.warning("尚未上傳檔案，或未啟用範例檔案")
+        
+        else:
+            st.warning("尚未上傳檔案，或未啟用範例檔案")
+    except Exception as e:
+             st.error(f"上傳或處理檔案時發生錯誤：{e}")
 
     if st.session_state.df is not None:
         df = st.session_state.updated_df  # 使用已更新的表單
