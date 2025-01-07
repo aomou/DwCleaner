@@ -4,7 +4,7 @@ import pandas as pd
 def main():
     # 確認第一頁有上傳並處理過資料
     if "df" not in st.session_state or st.session_state.df is None:
-        st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload_and_Edit』頁面。")
+        st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload』頁面。")
         return
 
     df = st.session_state.df
@@ -20,6 +20,10 @@ def main():
         
     # 建立新的資料表，並套用格式化函數
     new_df = df.copy()  # 假設 `df` 是 pandas DataFrame
+    if 'scientific_name' not in new_df.columns:
+        st.error("資料表中缺少 'scientific_name' 欄位，無法進行格式化處理。")
+        return
+        
     new_df['scientific_name'] = new_df['scientific_name'].apply(standardize_species)
     
     st.write("### 格式化後的資料：")
