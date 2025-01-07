@@ -5,8 +5,8 @@ from datetime import datetime
 import numpy as np
 
 def main():
-    error = False
-    st.title("圖表可視化")
+    
+    st.title("圖表視覺化")
     
     # 確認第一頁有上傳並處理過資料
     if "df" not in st.session_state or st.session_state.df is None:
@@ -18,62 +18,61 @@ def main():
     st.write(" 目前的資料：")
     st.dataframe(df)
     
-  # 提取年份及月份
-    def extract_year(eventDate):
-        if pd.isna(eventDate): 
-            return None
-        if isinstance(eventDate, (int)):
-            return int(eventDate)
+  # # 提取年份及月份
+  #   def extract_year(eventDate):
+  #       if pd.isna(eventDate): 
+  #           return None
+  #       if isinstance(eventDate, (int)):
+  #           return int(eventDate)
             
-            date_formats = ['%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d']
-            for fmt in date_formats:
-              try:
-                  date_obj = datetime.strptime(str(eventDate), fmt)
-                  # 返回標準化的日期格式 (%Y-%m-%d)
-                  standardized_date = date_obj.strftime('%Y-%m-%d')
-                  return date_obj.year
-              except ValueError:
-                  continue
-            return None
+  #           date_formats = ['%Y-%m-%d', '%Y/%m/%d', '%Y%m%d', '%Y.%m.%d']
+  #           for fmt in date_formats:
+  #             try:
+  #                 date_obj = datetime.strptime(str(eventDate), fmt)
+  #                 # 返回標準化的日期格式 (%Y-%m-%d)
+  #                 standardized_date = date_obj.strftime('%Y-%m-%d')
+  #                 return date_obj.year
+  #             except ValueError:
+  #                 continue
+  #           return None
         
 
 
     # 確保 DataFrame 包含 eventDate 欄位
     if 'eventDate' in df.columns:
-        df['year']= df['eventDate'].apply(extract_year)
-        st.success("eventDate處理完成！")    
-    elif 'year' in df.columns:
-        # 確保 year欄位存在後再進行操作(非空值均轉為字串)
-        df['year']= df['year'].apply(lambda x: str(x) if pd.notna(x) else x)
-        st.session_state.df = df
-        #st.write(df)
-        st.success("year處理完成！")
-    else:
-        st.error("無法取得年份資料，請回到『1_📁_Upload』增加年欄位!")
-        error = True
-        return
+        # df['year']= df['eventDate'].apply(extract_year)
+        st.success("『eventDate』欄位處理完成！")    
+    # elif 'year' in df.columns:
+    #     # 確保 year欄位存在後再進行操作(非空值均轉為字串)
+    #     df['year']= df['year'].apply(lambda x: str(x) if pd.notna(x) else x)
+    #     st.session_state.df = df
+    #     #st.write(df)
+    #     st.success("year處理完成！")
+    # else:
+    #     st.error("無法取得『eventDate』欄位，請回到『1_📁_Upload』確認『eventDate』欄位!")
+    #     error = True
+    #     return
                 
     
-    if not error and not df['year'].empty and not df['eventDate'].empty:
+    if not df['eventDate'].empty:
         # 移除無效年份數據
-        df['year']= pd.to_numeric(df['year'],errors='coerce')
+        # df['year']= pd.to_numeric(df['year'],errors='coerce')
         
-        # # 確保日期欄位為字串並取出年份  keyerror
+        #  確保日期欄位為字串並取出年份  keyerror
         if 'eventDate' in df.columns:
             df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
-            df['year'] = df['eventDate'].dt.year
+            # df['year'] = df['eventDate'].dt.year
 
         # 計算每個年份的出現次數
-        yearly_counts = df['year'].value_counts().sort_index()
+        yearly_counts = df['eventDate'].value_counts().sort_index()
         st.write("計算年份出現次數!!!")
         st.write(yearly_counts)
         
         if not yearly_counts.empty:
             # 建立長條圖
             st.title("Event Yearly Data Visualization")
-            st.write("每年數據累計圖:") # Yearly Count
+            st.write("歷年資料長條圖:") 
     
-            # 使用Plotly繪製長條圖
             # 使用 Plotly 繪製長條圖
             fig = px.bar(
                 x=yearly_counts.index,
@@ -110,8 +109,6 @@ def main():
 
             # 最終資料存進 Session State
             st.session_state.df = df
-        else:
-            st.warning("處理後沒有有效的年份數據，請檢查日期格式是否正確")
       
   
   
