@@ -1,0 +1,35 @@
+﻿serialNumber,date,location,recordBy,vernacularName,speciesname,longitude,latitude,count
+CAC_1,2014/11/8,森林1,小新,白鼻心,Paguma larvata,121° 31' 25.834'' E,25° 8' 57.33'' N,1
+CAC_2,2014/11/10,田園2,多夢,食蟹獴,Urva urva,121.56175,25.168303,3
+CAC_3,2014/12/23,草地6,小王,黃喉貂,Martes Flavigula   ,121.542211,25.179922,4
+CAC_4,2015/1/25,針葉林1,小靜,鼬獾,Melogale subaurantiaca  ,121.56171,25.168343,2
+CAC_5,2015/2/21,人造林2,小新,鼬獾,  Melogale subaurantiaca,121.6206377,25.15237796,2
+CAC_6,2016/2/21,森林2,小新,食蟹獴,Urva,121.536831,25.180592,2
+CAC_7,2016/3/17,田園3,小新,鼬獾,Melogale subaurantiaca,121.5440851,25.16187481,3
+CAC_8,2016/4/5,草地7,小新,鼬獾,Melogale subaurantiaca,121.603801,25.139542,1
+CAC_9,2016/4/10,針葉林2,小新,食蟹獴,Urva urva,121.611415,25.148365,2
+CAC_10,2016/4/11,人造林3,小靜,鼬獾,Melogale subaurantiaca,121.499399,25.187437,4
+CAC_11,2017/4/25,森林3,小靜,白鼻心,Paguma larvata,121.5555,25.149,3
+CAC_12,2017/4/29,田園4,小靜,白鼻心,paguma larvata,121.564672,25.161557,1
+CAC_13,2017/4/29,草地8,小靜,鼬獾,Melogale subaurantiaca,121.611415,25.148365,5
+CAC_14,2018/6/10,針葉林3,小靜,食蟹獴,Urva urva,121.565709,25.185788,1
+CAC_15,2018/9/15,人造林4,小靜,鼬獾,Melogale subaurantiaca,121.564672,25.161557,3
+CAC_16,2018/10/20,森林4,小王,鼬獾,Melogale subaurantiaca,121.540155,25.16087,4
+CAC_17,2018/10/20,田園5,小王,鼬獾,Melogale subaurantiaca,121.565205,25.166418,5
+CAC_18,2019/11/2,草地9,小王,黃喉貂,Martes flavigula,121.56239,25.152956,1
+CAC_19,2019/11/13,針葉林5,小王,鼬獾,Melogale subaurantiaca,121.5541426,25.11554,6
+CAC_20,2020/11/14,人造林5,小王,鼬獾,melogale subaurantiaca,121.561849,25.168854,4
+CAC_21,2021/11/21,森林5,小王,鼬獾,melogale subaurantiaca,121.565205,25.166418,5
+CAC_22,2022/12/5,田園6,小王,黃喉貂,Martes flavigula,121.5406744,25.17359005,1
+CAC_23,2022/12/7,草地10,小王,鼬獾,Melogale subaurantiaca,121.594319,25.151403,1
+CAC_24,2022/12/7,針葉林6,小新,鼬獾,Melogale subaurantiaca,121.56953,25.16736,5
+CAC_25,2023/12/26,人造林6,多夢,黃喉貂,Martes flavigula,121.570485,25.147079,4
+CAC_26,2023/12/30,森林6,小王,鼬獾,Melogale subaurantiaca,121.566928,25.165109,1
+CAC_27,2023/12/31,田園7,小靜,鼬獾,Melogale subaurantiaca,121.5732794,25.1659535,7
+CAC_28,2023/12/31,草地11,小新,鼬獾,Melogale subaurantiaca,121.550485,25.167079,8
+CAC_29,2023/12/31,針葉林7,多夢,鼬獾,Melogale subaurantiaca,121.540723,25.169543,1
+CAC_30,2024/1/12,人造林7,小王,鼬獾,Melogale subaurantiaca,121.556599,25.178909,3
+CAC_31,2024/2/2,森林7,小靜,鼬獾,Melogale subaurantiaca,121.591458,25.158142,6
+CAC_32,2024/2/14,田園8,小新,黃喉貂,Martes flavigula,121° 36' 13.68'' E,25° 8' 22.35'' N,6
+CAC_33,2024/2/26,草地12,多夢,鼬獾,Melogale subaurantiaca,121° 34' 27.75'' E,25° 10' 0.96'' N,8
+CAC_34,2024/3/22,針葉林8,小王,黃喉貂,Martes flavigula,121.546805,25.178584,2
