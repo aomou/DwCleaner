@@ -24,22 +24,12 @@ def main():
     
     # 確保 DataFrame 包含 eventDate 欄位
     if 'eventDate' in df.columns:
-        # 轉換為字串並移除逗號
-        df['eventDate'] = pd.to_datetime(df['eventDate'], errors='coerce')
-        # 提取年份
-        df['eventDate'] = df['eventDate'].dt.year
-
-        # 移除無效年份資料（NaN）
-        df = df.dropna(subset=['eventDate'])
-        df['eventDate'] = df['eventDate'].astype(int)  # 確保為整數
-
+        
         # 計算每年的出現次數
         yearly_counts = df['eventDate'].value_counts().sort_index()
-
-        # # 更新 session state 中的資料
-        # st.session_state.df = df
-        st.write(df)
-        st.success("『eventDate』欄位處理完成！")
+        
+        st.success("『eventDate』欄位內容")
+        st.write(df['eventDate'])
 
         st.write("計算年份出現次數!!!")
         st.write(yearly_counts)
