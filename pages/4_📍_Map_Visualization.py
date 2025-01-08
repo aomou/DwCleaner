@@ -19,11 +19,14 @@ def main():
     st.dataframe(df)
 
     #### check column
+    # 確認至少要有一種座標欄位，否則結束程式
+        # verbatim 為原始記錄值，目的是保留原始格式，以免後續轉換抄寫有錯誤的話才可以回溯
+        # decimal 為十進位格式的經緯度
     if 'verbatimLatitude' not in df.columns and 'decimalLatitude' not in df.columns and 'latitude' not in df.columns:  # no decimal, no verbatim
         st.write('No coordinates available! Only accept coordinate column names as `verbatimLatitude`, `decimalLatitude` or `latitude`')
         return    
-
-    if 'verbatimLatitude' not in df.columns:
+    
+    if 'verbatimLatitude' not in df.columns: # page1 已經會新增此欄位，但以防萬一沒有的話，用latitude或decimal代替
         if 'latitude' in df.columns:
             df['verbatimLatitude'] = df['latitude']
             df['verbatimLongitude'] = df['longitude']
@@ -33,7 +36,7 @@ def main():
             df['verbatimLatitude'] = df['decimalLatitude']
             df['verbatimLongitude'] = df['decimalLongitude']
                                                                                  
-    #### check coords format (decimal) ----
+    #### check coords format (only accept decimal) ----
     st.subheader('Check coordinates format')
     col1, col2 = st.columns(2)
 
@@ -50,23 +53,27 @@ def main():
         return bool(pattern.match(value_str))
 
     # subset invalid format
+    # 檢查原始經緯度是否為十進位
     not_decimal = []
-    for lat, lon in zip(df['decimalLatitude'], df['decimalLongitude']):
+    for lat, lon in zip(df['verbatimLatitude'], df['verbatimLongitude']):
         not_decimal.append(not is_decimal_by_regex(lat) or not is_decimal_by_regex(lon))  # select not matched row (if False append True)
 
     # generate new df with decimal format
     new_df = df.copy()
+    # mutate new columns (decimal) from verbatim
+    new_df['decimalLatitude'] = new_df['verbatimLatitude']
+    new_df['decimalLongitude'] = new_df['verbatimLongitude']
 
-    if sum(not_decimal) != 0:   
+    if sum(not_decimal) != 0:   # 如果有不符合格式的經緯度 row
         # print invalid coords
         col1.write('Invalid coords:')
-        col1.write(df[['decimalLatitude', 'decimalLongitude']][not_decimal]) 
+        col1.write(df[['verbatimLatitude', 'verbatimLongitude']][not_decimal]) 
 
         # subset invalid coords (copy) & generate edited version: `new_df`
-        df_not_decimal = df[['decimalLatitude', 'decimalLongitude']][not_decimal].copy()
+        df_not_decimal = df[['verbatimLatitude', 'verbatimLongitude']][not_decimal].copy()
 
         for i, row in df_not_decimal.iterrows():
-            coords = row['decimalLatitude'] + ' ' + row['decimalLongitude']
+            coords = row['verbatimLatitude'] + ' ' + row['verbatimLongitude']
             p_coords = Point(coords)
             new_df.loc[i, ['decimalLatitude', 'decimalLongitude']] = p_coords.latitude, p_coords.longitude
 
