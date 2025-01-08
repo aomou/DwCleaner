@@ -32,7 +32,7 @@ def main():
     
     # 將DataFrame 轉換為 Excel 格式
     output = io.BytesIO()
-    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    with pd.ExcelWriter('output.xlsx', engine='openpyxl') as writer:
         df.to_excel(write, index=False, sheet_name='Sheet1')
         writer.save()
         excel_data = output.getvalue()
