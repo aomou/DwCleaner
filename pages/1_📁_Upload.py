@@ -170,7 +170,7 @@ def main():
                         df["occurrenceID"] = [f"ID{i+1}" for i in range(len(df))]
                         st.success("occurrenceID 欄位已修正為唯一值。")
                 
-                st.session_state.updated_df = df
+                st.session_state.df = df
                 st.success("新增欄位完成！以下為更新後的資料：")
                 st.dataframe(df)
 
