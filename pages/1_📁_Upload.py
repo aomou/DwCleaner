@@ -182,5 +182,7 @@ def main():
                 st.success("新增欄位完成！以下為更新後的資料：")
                 st.dataframe(df)
 
+                st.info("請點選左側的「📊Chart Visualization」進行下一步資料可視化。")
+
 if __name__ == "__main__":
     main()
