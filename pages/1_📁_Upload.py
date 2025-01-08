@@ -5,7 +5,7 @@ def main():
     st.title("上傳並修改資料")
 
     required_cols = [
-        "basisOfRecord"
+        "basisOfRecord",
         "occurrenceID",
         "eventDate",
         "scientificName",
