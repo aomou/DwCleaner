@@ -1,4 +1,5 @@
 import streamlit as st
+import io
 
 def main():
     st.title("下載資料")
@@ -27,14 +28,18 @@ def main():
     )
 
     # 將DataFrame 轉換為 Excel 格式
-    xlsx = df.to_xlsx(index=False).encode("utf-8")
-
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine-'xlsxwriter') as writer:
+        df.to_excel(write, index=False, sheet_name="Sheet1")
+        writer.save()
+        xlsx_data = output.getvalue()
+    
     # 提供下載按鈕
     st.download_button(
-        label="下載xlsx",
-        data=xlsx,
+        label="下載 Excel",
+        data=xlsx_data,
         file_name="updated_data.xlsx"
-        mime="text/xlsx"
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
     
 if __name__ == "__main__":
