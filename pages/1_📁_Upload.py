@@ -13,8 +13,7 @@ def main():
         "individualCount",
         "locality"
     ]
-    df = None  # 初始化 df
-    
+
     # 初始化 session_state
     if "df" not in st.session_state:
         st.session_state.df = None
@@ -26,40 +25,38 @@ def main():
         st.session_state.new_col_settings = {}
     if "step" not in st.session_state:
         st.session_state.step = 1
+    if "ready_for_step2" not in st.session_state:
+        st.session_state.ready_for_step2 = False
 
-     # 提供範例檔案選項（checkbox 或者 radio / selectbox 皆可）
+    # 提供範例檔案選項
     use_sample = st.checkbox("使用範例檔案 (data/1_jellyfish_originalData.csv)")
-    
+
     # 上傳檔案
     user_file = st.file_uploader("請上傳您的 Excel 或 CSV 檔案", type=["xlsx", "xls", "csv"])
-  
-    
-    # 用一個變數來代表真正要處理的 uploaded_file
-    uploaded_file =None
-    
+
     # 決定最終使用的檔案
-    if use_sample:
-        uploaded_file = "data/1_jellyfish_originalData.csv"
-    elif user_file is not None:
-        uploaded_file = user_file
+    uploaded_file = "data/1_jellyfish_originalData.csv" if use_sample else user_file
 
     try:
         if uploaded_file:
-            if  uploaded_file.endswith(".csv"):
+            if isinstance(uploaded_file, str) and uploaded_file.endswith(".csv"):
                 df = pd.read_csv(uploaded_file)
-
+            elif isinstance(uploaded_file, str):
+                df = pd.read_excel(uploaded_file)
+            elif uploaded_file.name.endswith(".csv"):
+                df = pd.read_csv(uploaded_file)
             else:
                 df = pd.read_excel(uploaded_file)
+
             st.write("檔案成功上傳！以下是資料內容：")
             st.dataframe(df)
             st.session_state.df = df
             if st.session_state.updated_df is None:
                 st.session_state.updated_df = df.copy()
-        
         else:
             st.warning("尚未上傳檔案，或未啟用範例檔案")
     except Exception as e:
-             st.error(f"上傳或處理檔案時發生錯誤：{e}")
+        st.error(f"上傳或處理檔案時發生錯誤：{e}")
 
     if st.session_state.df is not None:
         df = st.session_state.updated_df  # 使用已更新的表單
@@ -67,15 +64,17 @@ def main():
 
         if st.session_state.step == 1:
             st.subheader("第一步：指定必填欄位對應")
+            st.markdown(
+                "請選擇上傳文件中的欄位名稱，對應到系統所需的必填欄位。\n\n"
+                "若文件中沒有相應欄位，可以選擇 '新增此欄位'，並在下一步填寫相關資料。"
+            )
             used_columns = set()
 
             for req_col in required_cols:
-                # 提供尚未被選定的欄位名稱作為選項
                 available_options = ["---尚未選擇---", "(新增此欄位)"] + [
                     col for col in original_cols if col not in used_columns
                 ]
 
-                # 確保選項包括已選定的欄位名稱
                 current_value = st.session_state.required_mapping[req_col]
                 if current_value not in available_options:
                     available_options.append(current_value)
@@ -97,26 +96,26 @@ def main():
                 )
 
             if st.button("設定完成第一步"):
-                # 驗證所有必填欄位已選定
                 if any(value == "---尚未選擇---" for value in st.session_state.required_mapping.values()):
                     st.warning("請確保所有必填欄位都有對應的欄位或選擇新增此欄位。")
                 else:
-                    # 更新表單資料
                     for req_col, selected in st.session_state.required_mapping.items():
                         if selected not in ["---尚未選擇---", "(新增此欄位)"]:
-                            # 將選定的欄位名稱即時更新到資料表
                             if selected in df.columns:
                                 df.rename(columns={selected: req_col}, inplace=True)
                         elif selected == "(新增此欄位)":
-                            # 保留新增欄位的處理到第二步驟
                             st.session_state.new_col_settings[req_col] = {"method": "manual_input", "cols": [], "delimiter": "-", "text": ""}
                     
-                    st.session_state.updated_df = df  # 保存更新後的表單
-                    st.session_state.step = 2  # 進入第二步驟
-                    st.success("第一步設定完成！表單已更新。")
+                    st.session_state.updated_df = df
+                    st.session_state.ready_for_step2 = True
+                    st.success("第一步設定完成！以下是更正後的表單：")
                     st.dataframe(df)
 
-        elif st.session_state.step == 2:
+        if st.session_state.ready_for_step2:
+            if st.button("進入第二步驟"):
+                st.session_state.step = 2
+
+        if st.session_state.step == 2:
             st.subheader("第二步：設定新增欄位")
             for req_col, selected in st.session_state.required_mapping.items():
                 if selected == "(新增此欄位)":
@@ -155,33 +154,25 @@ def main():
                         st.session_state.new_col_settings[req_col]["text"] = manual_text
 
             if st.button("完成第二步"):
-                # 處理新增的欄位
                 for req_col, setting in st.session_state.new_col_settings.items():
                     if setting["method"] == "combine_cols":
                         cols_to_combine = setting["cols"]
                         delim = setting["delimiter"]
-                        df[req_col] = df[cols_to_combine].apply(
+                        df[req_col] = df[cols_to_combine].fillna("").apply(
                             lambda row: delim.join(str(x) for x in row), axis=1
                         )
                     elif setting["method"] == "manual_input":
                         df[req_col] = setting["text"]
                 
-                # 檢查 occurrenceID 是否有重複值
                 if "occurrenceID" in df.columns:
                     if df["occurrenceID"].duplicated().any():
                         st.warning("檢測到 occurrenceID 欄位中有重複值，系統將自動修正。")
                         df["occurrenceID"] = [f"ID{i+1}" for i in range(len(df))]
                         st.success("occurrenceID 欄位已修正為唯一值。")
                 
-                st.session_state.updated_df = df  # 保存最終更新的表單
+                st.session_state.updated_df = df
                 st.success("新增欄位完成！以下為更新後的資料：")
                 st.dataframe(df)
 
-    
-    # 最終資料存進 Session State
-    if st.session_state.updated_df is not None:
-        st.session_state.df = st.session_state.updated_df
-
 if __name__ == "__main__":
     main()
-    
