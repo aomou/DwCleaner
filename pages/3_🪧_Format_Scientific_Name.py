@@ -24,9 +24,9 @@ def main():
         # 格式化兩部分
         genus = parts[0].capitalize()
         species = parts[1].lower()
-        
-    # 合併成學名格式
-    return f"{genus} {species}"
+        # 合併成學名格式
+        return f"{genus} {species}"
+    
         
     # 建立新的資料表，並套用格式化函數
     new_df = df.copy()  
