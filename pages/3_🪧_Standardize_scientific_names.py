@@ -2,12 +2,12 @@ import streamlit as st
 import pandas as pd 
 
 def main():
-    st.write(處理學名格式)
+    st.write("處理學名格式")
     # 確認第一頁有上傳並處理過資料
     if "df" not in st.session_state or st.session_state.df is None:
         st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload』頁面。")
         return
-
+    
     df = st.session_state.df
 
     st.write("### 目前的資料：")
