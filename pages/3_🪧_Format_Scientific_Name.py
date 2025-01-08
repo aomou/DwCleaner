@@ -14,11 +14,11 @@ def main():
     st.dataframe(df)
 
     # 格式化學名的函數
-    def format_scientific_name(name):
+    def format_scientific_name(scientificName):
         # 移除首尾空白
-        name = name.strip()
+        scientificName = scientificName.strip()
         # 分割為兩部分
-        parts = name.split()
+        parts = scientificName.split()
         if len(parts) != 2:
             raise ValueError("名稱應該包含兩部分，例如 'Vriesea drewii'")
         # 格式化兩部分
