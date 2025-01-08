@@ -29,13 +29,13 @@ def main():
         st.session_state.ready_for_step2 = False
 
     # 提供範例檔案選項
-    use_sample = st.checkbox("使用範例檔案 (data/1_jellyfish_originalData.csv)")
+    use_sample = st.checkbox("使用範例檔案 (data/test_occurrenceData.xlsx)")
 
     # 上傳檔案
     user_file = st.file_uploader("請上傳您的 Excel 或 CSV 檔案", type=["xlsx", "xls", "csv"])
 
     # 決定最終使用的檔案
-    uploaded_file = "data/1_jellyfish_originalData.csv" if use_sample else user_file
+    uploaded_file = "data/test_occurrenceData.xlsx" if use_sample else user_file
 
     try:
         if uploaded_file:
