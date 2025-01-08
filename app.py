@@ -46,8 +46,8 @@ def main():
         1. 只能處理度分秒和十進位的經緯度格式  
         2. 無法將 core 和 extension 分成兩個資料表  
     \n\n
-    各欄位的填寫標準和要求請參考一下資源：
-        * [Darwin Core Quick Reference Guide - Darwin Core](https://dwc.tdwg.org/terms/)
+    各欄位的填寫標準和要求請參考一下資源：  
+        * [Darwin Core Quick Reference Guide - Darwin Core](https://dwc.tdwg.org/terms/)  
         * [Darwin Core 達爾文核心標準資料格式說明 中文版](https://hackmd.io/TmsAwdC6TaGr-lciIwxh3g?view)
     '''
     st.markdown(how)
