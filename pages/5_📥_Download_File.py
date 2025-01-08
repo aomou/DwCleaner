@@ -31,12 +31,13 @@ def main():
     st.write("以Excel打開csv檔，編碼指定\"utf-8\"可解決欄位亂碼問題")
     
     # 將DataFrame 轉換為 Excel 格式
-    output = io.BytesIO()
-    with pd.ExcelWriter('output.xlsx', engine='openpyxl') as writer:
+    buffer = io.BytesIO()
+    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
         df.to_excel(write, index=False, sheet_name='Sheet1')
         writer.book.active.sheet_state = 'visible'
-        writer.save()
+
         excel_data = output.getvalue()
+    buffer.seek(0)
     
     # 提供下載按鈕
     st.download_button(
