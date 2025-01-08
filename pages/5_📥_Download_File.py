@@ -30,22 +30,22 @@ def main():
 
     st.write("以Excel打開csv檔，編碼指定\"utf-8\"可解決欄位亂碼問題")
     
-    # 將DataFrame 轉換為 Excel 格式
-    buffer = io.BytesIO()
-    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-        df.to_excel(write, index=False, sheet_name='Sheet1')
-        writer.book.active.sheet_state = 'visible'
+    # # 將DataFrame 轉換為 Excel 格式
+    # buffer = io.BytesIO()
+    # with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+    #     df.to_excel(write, index=False, sheet_name='Sheet1')
+    #     writer.book.active.sheet_state = 'visible'
 
-        excel_data = output.getvalue()
-    buffer.seek(0)
+    #     excel_data = output.getvalue()
+    # buffer.seek(0)
     
-    # 提供下載按鈕
-    st.download_button(
-        label="下載 Excel 檔案",
-        data=excel_data,
-        file_name="updated_data.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+    # # 提供下載按鈕
+    # st.download_button(
+    #     label="下載 Excel 檔案",
+    #     data=excel_data,
+    #     file_name="updated_data.xlsx",
+    #     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    # )
     
 if __name__ == "__main__":
     main()
