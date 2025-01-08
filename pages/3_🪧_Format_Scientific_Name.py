@@ -14,10 +14,19 @@ def main():
     st.dataframe(df)
 
     # 格式化學名的函數
-    def format_scientific_name(scientificName):
-        if pd.notna(scientificName):
-            return scientificName.strip().title()
-        return scientificName
+    def format_scientific_name(name):
+        # 移除首尾空白
+        name = name.strip()
+        # 分割為兩部分
+        parts = name.split()
+        if len(parts) != 2:
+            raise ValueError("名稱應該包含兩部分，例如 'Vriesea drewii'")
+        # 格式化兩部分
+        genus = parts[0].capitalize()
+        species = parts[1].lower()
+        
+    # 合併成學名格式
+    return f"{genus} {species}"
         
     # 建立新的資料表，並套用格式化函數
     new_df = df.copy()  
