@@ -6,7 +6,7 @@ def main():
     st.title("下載資料")
     # 檢查是否有上傳的資料
     if "df" not in st.session_state or st.session_state.df is None:
-        st.warning("尚未上傳或處理資料，請先回到『📁_Upload』頁面。")
+        st.warning("尚未上傳或處理資料，請先回到『📁 Upload』頁面。")
         return
 
     # 取得已處理的資料
@@ -28,6 +28,8 @@ def main():
         mime="text/csv"
     )
 
+    st.write("以Excel打開csv檔，編碼指定\"utf-8\"可解決欄位亂碼問題")
+    
     # 將DataFrame 轉換為 Excel 格式
     output = io.BytesIO()
     with pd.ExcelWriter(output, engine-'xlsxwriter') as writer:
