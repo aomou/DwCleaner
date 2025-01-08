@@ -36,9 +36,9 @@ def main():
         # 計算每年的出現次數
         yearly_counts = df['eventDate'].value_counts().sort_index()
 
-        # 更新 session state 中的資料
-        st.session_state.df = df
-        st.write(st.session_state.df)
+        # # 更新 session state 中的資料
+        # st.session_state.df = df
+        st.write(df)
         st.success("『eventDate』欄位處理完成！")
 
         st.write("計算年份出現次數!!!")
