@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd 
 
 def main():
-    st.write("處理學名格式")
+    st.write("## 處理學名格式")
     # 確認第一頁有上傳並處理過資料
     if "df" not in st.session_state or st.session_state.df is None:
         st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload』頁面。")
@@ -29,7 +29,7 @@ def main():
         
     new_df['scientificName'] = new_df['scientificName'].apply(format_scientific_name)
     
-    st.write("### 格式化後的資料：")
+    st.write("### 學名格式化後的資料：")
     st.dataframe(new_df)
     
     # 如果有資料，可以顯示「下一頁」按鈕
