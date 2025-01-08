@@ -37,7 +37,7 @@ def main():
     
     # 如果有資料，可以顯示「下一頁」按鈕
     if st.session_state.df is not None:
-        st.info("請點選左側的『4_📍_Map_Visualization』進行地圖檢查或修正。")
+        st.info("請點選左側的「📍 Map Visualization」進行地圖檢查或修正。")
     
     st.session_state.df = new_df
     
