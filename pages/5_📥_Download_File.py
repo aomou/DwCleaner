@@ -22,7 +22,7 @@ def main():
     
     # 提供下載按鈕
     st.download_button(
-        label="下載csv",
+        label="下載 CSV 檔案 ",
         data=csv,
         file_name="updated_data.csv",
         mime="text/csv"
@@ -32,15 +32,15 @@ def main():
     
     # 將DataFrame 轉換為 Excel 格式
     output = io.BytesIO()
-    with pd.ExcelWriter(output, engine-'xlsxwriter') as writer:
-        df.to_excel(write, index=False, sheet_name="Sheet1")
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(write, index=False, sheet_name='Sheet1')
         writer.save()
-        xlsx_data = output.getvalue()
+        excel_data = output.getvalue()
     
     # 提供下載按鈕
     st.download_button(
-        label="下載 Excel",
-        data=xlsx_data,
+        label="下載 Excel 檔案",
+        data=excel_data,
         file_name="updated_data.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
