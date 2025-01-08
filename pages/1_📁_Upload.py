@@ -117,6 +117,14 @@ def main():
 
         if st.session_state.step == 2:
             st.subheader("第二步：設定新增欄位")
+            
+            # 檢查是否有需要新增的欄位
+            new_field_needed = any(
+                selected == "(新增此欄位)" for selected in st.session_state.required_mapping.values()
+            )
+            if not new_field_needed:
+                st.info("若沒有需要新增的欄位，請直接點選「完成第二步」。")
+                
             for req_col, selected in st.session_state.required_mapping.items():
                 if selected == "(新增此欄位)":
                     setting = st.session_state.new_col_settings.get(req_col, {})
