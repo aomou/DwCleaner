@@ -10,12 +10,12 @@ def main():
     
     # 確認第一頁有上傳並處理過資料
     if "df" not in st.session_state or st.session_state.df is None:
-        st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload』頁面。")
+        st.warning("尚未上傳或處理資料，請回到「📁 Upload」頁面重新上傳資料。")
         return
     
 
     df = st.session_state.df
-    st.write(" 目前的資料：")
+    st.write("目前的資料：")
     st.dataframe(df)
     
     # 顯示目前的欄位名稱，方便除錯
@@ -38,15 +38,14 @@ def main():
         # 如果 yearly_counts 有資料
         if not yearly_counts.empty:
            
-            st.title("Event Yearly Data Visualization")
-            st.write("歷年生物出現長條圖:") 
+            st.title("資料時間分佈：")
             
             # 繪製長條圖
             fig = px.bar(
                 x=yearly_counts.index,
                 y=yearly_counts.values,
                 labels={'x': 'Year', 'y': 'Number of Records'},
-                title='Yearly Data Counts',
+                title='Data counts over time',
                 text=yearly_counts.values  # 在每個柱上顯示數值
             )
             
@@ -77,7 +76,9 @@ def main():
 
             # 最終資料存進 Session State
             st.session_state.df = df
-      
+
+        if st.session_state.df is not None:
+            st.info("請點選左側的「🪧 Format Species Name」進行下一步的資料清理。")
   
 if __name__ == "__main__":
     main()
