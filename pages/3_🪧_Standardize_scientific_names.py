@@ -14,7 +14,7 @@ def main():
     st.dataframe(df)
 
     # 格式化學名的函數
-    def standardize_species(scientific_name):
+    def format_scientific_name(scientific_name):
         if pd.notna(scientific_name):
             return scientific_name.strip().title()
         return scientific_name
@@ -25,7 +25,7 @@ def main():
         st.error("資料表中缺少 'scientific_name' 欄位，無法進行格式化處理。")
         return
         
-    new_df['scientific_name'] = new_df['scientific_name'].apply(standardize_species)
+    new_df['scientific_name'] = new_df['scientific_name'].apply(format_scientific_name)
     
     st.write("### 格式化後的資料：")
     st.dataframe(new_df)
