@@ -10,7 +10,7 @@ def main():
 
     # 確認第一頁有上傳並處理過資料
     if "df" not in st.session_state or st.session_state.df is None:
-        st.warning("尚未上傳或處理資料，請先回到『1_📁_Upload_and_Edit』頁面。")
+        st.warning("尚未上傳或處理資料，請先回到「📁 Upload」頁面上傳資料。")
         return
 
     df = st.session_state.df
@@ -159,10 +159,16 @@ def main():
 
     ## Display map through Streamlit ----
     #st.write('Size: individualCount 點的大小代表個體數')
+
+    if 'vernacularName' in new_df.columns:
+        label_text = {'html': 'ID: <span style="font-family: monospace;">{occurrenceID}</span>, {vernacularName} <i>{scientificName}</i>'}
+    else:
+        label_text = {'html': 'ID: <span style="font-family: monospace;">{occurrenceID}</span>, <i>{scientificName}</i>'}
+    
     st.pydeck_chart(pdk.Deck(
         layers = [layer],
         initial_view_state = view_state,
-        tooltip = {'html': 'ID: <span style="font-family: monospace;">{occurrenceID}</span>, {vernacularName} <i>{scientificName}</i>'}
+        tooltip = label_text
     ))
 
     # 更新後，如有需要再同步回 session_state
