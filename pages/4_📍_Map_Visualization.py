@@ -170,7 +170,7 @@ def main():
 
     # 下一頁
     if st.session_state.df is not None:
-        st.info("請點選左側的「5_📥_Download_File」下載處理後的檔案。")
+        st.info("請點選左側的「📥 Download File」下載處理後的檔案。")
 
 if __name__ == "__main__":
     main()
