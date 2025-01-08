@@ -28,11 +28,11 @@ def main():
         # 計算每年的出現次數
         yearly_counts = df['eventDate'].value_counts().sort_index()
         
-        st.success("『eventDate』欄位內容")
-        st.write(df['eventDate'])
+        # st.success("『eventDate』欄位內容")
+        # st.write(df['eventDate'])
 
-        st.write("計算年份出現次數!!!")
-        st.write(yearly_counts)
+        # st.write("計算年份出現次數!!!")
+        # st.write(yearly_counts)
     
     
         # 如果 yearly_counts 有資料
@@ -40,9 +40,6 @@ def main():
            
             st.title("Event Yearly Data Visualization")
             st.write("歷年生物出現長條圖:") 
-
-            st.write(yearly_counts.index)
-            st.write(yearly_counts.values)
             
             # 繪製長條圖
             fig = px.bar(
