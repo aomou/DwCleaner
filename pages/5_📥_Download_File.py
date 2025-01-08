@@ -34,6 +34,7 @@ def main():
     output = io.BytesIO()
     with pd.ExcelWriter('output.xlsx', engine='openpyxl') as writer:
         df.to_excel(write, index=False, sheet_name='Sheet1')
+        writer.book.active.sheet_state = 'visible'
         writer.save()
         excel_data = output.getvalue()
     
