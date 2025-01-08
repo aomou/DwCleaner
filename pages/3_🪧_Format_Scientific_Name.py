@@ -23,12 +23,6 @@ def main():
     new_df = df.copy()  
     new_df['scientificName'] = new_df['scientificName'].apply(format_scientific_name)
     
-    if 'scientificName' not in new_df.columns:
-        st.error("資料表中缺少 'scientificName' 欄位，無法進行格式化處理。")
-        return
-        
-    new_df['scientificName'] = new_df['scientificName'].apply(format_scientific_name)
-    
     st.write("### 學名格式化後的資料：")
     st.dataframe(new_df)
     
