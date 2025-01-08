@@ -14,18 +14,20 @@ def main():
     st.dataframe(df)
 
     # 格式化學名的函數
-    def format_scientific_name(scientific_name):
-        if pd.notna(scientific_name):
-            return scientific_name.strip().title()
-        return scientific_name
+    def format_scientific_name(scientificName):
+        if pd.notna(scientificName):
+            return scientificName.strip().title()
+        return scientificName
         
     # 建立新的資料表，並套用格式化函數
-    new_df = df.copy()  # 假設 `df` 是 pandas DataFrame
-    if 'scientific_name' not in new_df.columns:
-        st.error("資料表中缺少 'scientific_name' 欄位，無法進行格式化處理。")
+    new_df = df.copy()  
+    new_df['scientificName'] = new_df['scientificName'].apply(format_scientific_name)
+    
+    if 'scientificName' not in new_df.columns:
+        st.error("資料表中缺少 'scientificName' 欄位，無法進行格式化處理。")
         return
         
-    new_df['scientific_name'] = new_df['scientific_name'].apply(format_scientific_name)
+    new_df['scientificName'] = new_df['scientificName'].apply(format_scientific_name)
     
     st.write("### 格式化後的資料：")
     st.dataframe(new_df)
