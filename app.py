@@ -36,16 +36,16 @@ def main():
     st.subheader(":mag: 如何使用？")
     how = '''
     本工具包含以下 5 個清理步驟：  
-        1. 檔案上傳和欄位清理  
-        2. 日期格式檢查和視覺化  
-        3. 學名格式修正  
-        4. 經緯度格式修正和地理分佈視覺化  
-        5. 下載檔案
+    1. 檔案上傳和欄位清理  
+    2. 日期格式檢查和視覺化  
+    3. 學名格式修正  
+    4. 經緯度格式修正和地理分佈視覺化  
+    5. 下載檔案
     \n\n
     需注意的是，此工具能接受的資料格式有以下限制：  
-        1. 只能處理度分秒和十進位的經緯度格式  
-        2. 目前只能處理出現紀錄（occurrence）的資料類型，不接受調查活動（sampling event）和物種名錄（checklist）
-        3. 無法將 core 和 extension 分成兩個資料表  
+    1. 只能處理度分秒和十進位的經緯度格式  
+    2. 目前只能處理出現紀錄（occurrence）的資料類型，不接受調查活動（sampling event）和物種名錄（checklist）  
+    3. 無法將 core 和 extension 分成兩個資料表  
     \n\n
     各欄位的填寫標準和要求請參考以下資源：  
     - [Darwin Core Quick Reference Guide - Darwin Core](https://dwc.tdwg.org/terms/)  
