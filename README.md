@@ -1,10 +1,10 @@
 ---
 title: DwCleaner
 emoji: 🐢
-colorFrom: indigo
-colorTo: blue
+colorFrom: yellow
+colorTo: yellow
 sdk: streamlit
-sdk_version: 1.40.2
+sdk_version: 1.41.1
 app_file: app.py
 pinned: false
 license: cc-by-4.0
