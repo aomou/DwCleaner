@@ -18,7 +18,9 @@ jobs:
 
       - name: Sync files from HF Space
         run: |
-          rsync -av --delete hf_space/ ./
+          for i in {1..5}; do
+            rsync -av --delete hf_space/ ./ && break || sleep 10;
+          done
           rm -rf hf_space
 
       - name: Commit and push changes
