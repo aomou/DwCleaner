@@ -15,11 +15,10 @@ jobs:
       - name: Clone Hugging Face Space
         run: |
           git clone --depth=1 https://huggingface.co/spaces/aomou/DwCleaner hf_space
-
       - name: Sync files from HF Space
         run: |
           for i in {1..5}; do
-            rsync -av --delete hf_space/ ./ 
+            rsync -av --delete hf_space/ ./
             ret=$?
             if [ $ret -eq 0 ]; then
                 # 完全成功，跳出迴圈
